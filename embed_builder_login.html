@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inloggen · DaanYT Embed Builder</title>
+  <style>
+    :root { color-scheme: dark; } * { box-sizing: border-box; } body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #151515; color: #f5f5f5; font: 15px system-ui, sans-serif; } main { width: min(420px, calc(100% - 40px)); padding: 28px; border: 1px solid #3a3a3a; border-radius: 12px; background: #202020; } h1 { margin-top: 0; font-size: 22px; } p { color: #aaa; line-height: 1.5; } input { width: 100%; margin: 10px 0 14px; padding: 11px; border: 1px solid #3a3a3a; border-radius: 7px; background: #111; color: #fff; font: inherit; } button { width: 100%; padding: 11px; border: 0; border-radius: 7px; background: #ff3737; color: #fff; font: inherit; font-weight: 700; cursor: pointer; } #error { min-height: 22px; margin-top: 12px; color: #ff6b6b; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>DaanYT Embed Builder</h1>
+    <p>Log in met het lokale wachtwoord uit je <code>.env</code>-bestand.</p>
+    <form id="login"><input id="password" type="password" autocomplete="current-password" placeholder="Wachtwoord" required autofocus><button>Inloggen</button></form>
+    <div id="error"></div>
+  </main>
+  <script>
+    document.getElementById('login').addEventListener('submit', async event => { event.preventDefault(); const error = document.getElementById('error'); error.textContent = ''; const response = await fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: document.getElementById('password').value}) }); const data = await response.json(); if (!response.ok) { error.textContent = data.error || 'Inloggen mislukt.'; return; } window.location.href = '/'; });
+  </script>
+</body>
+</html>
